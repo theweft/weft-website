@@ -1,0 +1,10 @@
+// Cloudflare Workers static assets: serves ./public, no server code.
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "weft-website",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./public",
+    "not_found_handling": "404-page"
+  }
+}

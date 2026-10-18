@@ -1,0 +1,7 @@
+# Security contact for weft (RFC 9116). Contacts are listed in order of preference.
+Contact: https://theweft.org/security/
+Contact: mailto:security@theweft.org
+Expires: 2027-09-30T00:00:00.000Z
+Preferred-Languages: en, de
+Policy: https://theweft.org/security/
+Canonical: https://theweft.org/.well-known/security.txt

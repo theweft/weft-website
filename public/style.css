@@ -1,0 +1,151 @@
+/* SPDX-FileCopyrightText: 2026 The weft authors */
+/* SPDX-License-Identifier: MIT */
+
+:root {
+  color-scheme: light dark;
+  --bg: #f7f6f2;
+  --fg: #1d2333;
+  --muted: #5b6273;
+  --line: #d9d6cc;
+  --warp: #3d63c9;
+  --weft: #b9821f;
+  --card: #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #11151f;
+    --fg: #e6e8ee;
+    --muted: #9aa1b2;
+    --line: #283041;
+    --warp: #8fb3ff;
+    --weft: #e8b04b;
+    --card: #171c28;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font: 1.0625rem/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+main {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 4.5rem 1rem 3rem;
+}
+
+.mark {
+  display: block;
+  width: 3.5rem;
+  height: 3.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.mark .warp {
+  stroke: var(--warp);
+}
+
+.mark .weft,
+.mark .over {
+  stroke: var(--weft);
+}
+
+.mark .gap {
+  stroke: var(--bg);
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(2.25rem, 7vw, 3.25rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.tagline {
+  margin: 0.75rem 0 2rem;
+  font-size: 1.25rem;
+  color: var(--muted);
+}
+
+h2 {
+  margin: 2.5rem 0 0.75rem;
+  font-size: 1.125rem;
+}
+
+ul.principles {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.75rem;
+}
+
+ul.principles li {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--warp);
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+}
+
+ul.principles li:nth-child(even) {
+  border-left-color: var(--weft);
+}
+
+ul.principles strong {
+  display: block;
+}
+
+.status {
+  display: inline-block;
+  margin: 0;
+  padding: 0.25rem 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 0.9375rem;
+  color: var(--muted);
+}
+
+a {
+  color: var(--warp);
+  text-underline-offset: 0.15em;
+}
+
+a:focus-visible {
+  outline: 2px solid var(--weft);
+  outline-offset: 2px;
+}
+
+code {
+  font: 0.9375em ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+
+ol {
+  padding-left: 1.25rem;
+}
+
+footer {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 3rem;
+  border-top: 1px solid var(--line);
+  font-size: 0.9375rem;
+  color: var(--muted);
+}
+
+footer nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+}
