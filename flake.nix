@@ -25,8 +25,11 @@
             pkgs.lychee
             pkgs.typos
             pkgs.reuse
-            pkgs.python3
+            # Brand set: wordmark outlines from Inter (SIL OFL), PNG export.
+            (pkgs.python3.withPackages (ps: [ ps.fonttools ]))
+            pkgs.resvg
           ];
+          INTER_FONT = "${pkgs.inter}/share/fonts/truetype/InterVariable.ttf";
         };
       });
     };

@@ -7,8 +7,11 @@
   --fg: #1d2333;
   --muted: #5b6273;
   --line: #d9d6cc;
-  --warp: #3d63c9;
-  --weft: #b9821f;
+  /* Brand colours (see public/brand/README.md); links use --accent for readable text. */
+  --warp: #1f3bad;
+  --weft: #c18215;
+  --accent: #1f3bad;
+  --on-accent: #ffffff;
   --card: #ffffff;
 }
 
@@ -18,8 +21,10 @@
     --fg: #e6e8ee;
     --muted: #9aa1b2;
     --line: #283041;
-    --warp: #8fb3ff;
-    --weft: #e8b04b;
+    --warp: #3355db;
+    --weft: #f6bb55;
+    --accent: #8fb3ff;
+    --on-accent: #11151f;
     --card: #171c28;
   }
 }
@@ -53,16 +58,27 @@ main {
 }
 
 .mark .warp {
-  stroke: var(--warp);
+  fill: var(--warp);
 }
 
 .mark .weft,
-.mark .over {
-  stroke: var(--weft);
+.lockup .weft {
+  fill: var(--weft);
 }
 
-.mark .gap {
-  stroke: var(--bg);
+.lockup .warp {
+  fill: var(--warp);
+}
+
+.lockup .ink {
+  fill: var(--fg);
+}
+
+.lockup {
+  display: block;
+  height: clamp(3rem, 12vw, 4.5rem);
+  width: auto;
+  max-width: 100%;
 }
 
 h1 {
@@ -118,7 +134,7 @@ ul.principles strong {
 }
 
 a {
-  color: var(--warp);
+  color: var(--accent);
   text-underline-offset: 0.15em;
 }
 
@@ -191,13 +207,13 @@ body.park .links a {
 }
 
 body.park .links a:hover {
-  border-color: var(--warp);
+  border-color: var(--accent);
 }
 
 body.park .links a.primary {
-  background: var(--warp);
-  border-color: var(--warp);
-  color: var(--bg);
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--on-accent);
 }
 
 body.park footer {
@@ -213,14 +229,8 @@ body.park footer {
     padding: 1rem;
   }
 
-  body.park .mark {
-    width: 2rem;
-    height: 2rem;
-    margin-bottom: 0.5rem;
-  }
-
-  body.park h1 {
-    font-size: 2rem;
+  body.park .lockup {
+    height: 2.5rem;
   }
 
   body.park .tagline {

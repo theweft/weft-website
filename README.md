@@ -8,6 +8,7 @@ The [theweft.org](https://theweft.org) website: a static placeholder for now. Pl
 | `/` | What weft is, status, links |
 | `/security/` | How to report vulnerabilities (GitHub private reporting first, then security@theweft.org) |
 | `/.well-known/security.txt` | Machine-readable security contact ([RFC 9116](https://www.rfc-editor.org/rfc/rfc9116)) |
+| `/brand/` | Logo, wordmark, lockups, icons and social preview; see [brand/README.md](brand/README.md) |
 | `_headers` | Strict Content-Security-Policy and other security headers, applied by Cloudflare |
 
 ## Deploy on Cloudflare

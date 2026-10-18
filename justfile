@@ -22,6 +22,17 @@ security-txt:
     if [ "$left" -lt 60 ]; then echo "security.txt expires in $left days: update Expires"; exit 1; fi; \
     echo "security.txt valid for $left more days"
 
+# Regenerate the brand set (public/brand, favicon) from brand/generate.py.
+brand:
+    python3 brand/generate.py "$INTER_FONT"
+
+# The committed brand files and the logo in the pages must match the generator.
+brand-check: brand
+    git diff --exit-code -- public/brand public/favicon.svg brand/mark-inline.html brand/lockup-inline.html
+    @for f in public/index.html public/security/index.html public/404.html; do \
+        grep -qF "$(cat brand/mark-inline.html)" "$f" || grep -qF "$(cat brand/lockup-inline.html)" "$f" || { echo "$f: logo differs from the generated inline logo"; exit 1; }; \
+    done
+
 # Spelling.
 typos:
     typos
@@ -31,4 +42,4 @@ licenses:
     reuse lint
 
 # Everything CI checks.
-ci: links security-txt typos licenses
+ci: links security-txt brand-check typos licenses
