@@ -30,6 +30,8 @@ LIGHT_BG, DARK_BG = "#f7f6f2", "#11151f"
 # Mark geometry on a 48-unit grid: 2x2 plain weave, square ends, real gaps.
 SIZE, W, GAP, PITCH, LO, HI = 48, 6, 2.6, 16, 5, 43
 WORD_WEIGHT = 600  # Inter weight for the wordmark
+# Extra space between letter pairs, in font units: Inter's f and t crossbars almost touch.
+KERN = {("f", "t"): 100}
 
 
 def mark_paths():
@@ -74,7 +76,8 @@ def word_outline(font, text):
     glyphs = font.getGlyphSet()
     cmap = font.getBestCmap()
     x, parts = 0, []
-    for ch in text:
+    for i, ch in enumerate(text):
+        x += KERN.get((text[i - 1], ch), 0) if i else 0
         name = cmap[ord(ch)]
         pen = SVGPathPen(glyphs)
         glyphs[name].draw(TransformPen(pen, (1, 0, 0, 1, x, 0)))
@@ -123,7 +126,7 @@ def main(font_path):
         s = 21 / x_height
         mark_h, gap = 48, 12
         baseline = SIZE / 2 + 10.5
-        width = mark_h + gap + advance * s
+        width = mark_h + gap + advance * s + LO  # right margin matches the mark's left margin
         write(f"lockup-horizontal-{tag}.svg", svg(width, mark_h, mark_group(p) + word_group(word, p, mark_h + gap, baseline, s)))
 
         # Stacked lockup: mark above, wordmark centred below.
@@ -146,7 +149,7 @@ def main(font_path):
 
     # Social preview (Open Graph), 1200 x 630: horizontal lockup centred on the light background.
     s = 21 / x_height
-    lock_w = 48 + 12 + advance * s
+    lock_w = 48 + 12 + advance * s + LO
     scale = 640 / lock_w
     og = svg(
         1200, 630,
@@ -179,7 +182,7 @@ def main(font_path):
     # Inline horizontal lockup for the start page heading (colours from CSS custom properties).
     s = 21 / x_height
     d, _, _ = word
-    lock_w = 48 + 12 + advance * s
+    lock_w = 48 + 12 + advance * s + LO
     lockup = (
         f'<svg class="lockup" viewBox="0 0 {lock_w:g} 48" role="img" aria-label="weft">'
         + "".join(f'<path class="{kind}" d="{pd}"/>' for kind, pd in mark_paths())
