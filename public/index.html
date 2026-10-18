@@ -4,45 +4,27 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>weft: open embedded fleet platform</title>
-  <meta name="description" content="weft weaves existing open tools into one end-to-end embedded fleet platform: offline by design, every layer swappable.">
+  <meta name="description" content="weft weaves existing open tools into one end-to-end embedded fleet platform. Early design; code on GitHub.">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/style.css">
 </head>
-<body>
+<body class="park">
   <main>
     <svg class="mark" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><g fill="none" stroke-width="4" stroke-linecap="round"><path class="weft" d="M8 17h32"/><path class="weft" d="M8 31h32"/><path class="warp" d="M18 8v32"/><path class="warp" d="M30 8v32"/><path class="gap" stroke-width="8" d="M15 17h6M27 31h6"/><path class="over" d="M15 17h6M27 31h6"/></g></svg>
     <h1>weft</h1>
-    <p class="tagline">Weave existing open tools into one end-to-end embedded fleet platform.</p>
-    <p class="status">Status: early design. Nothing to install yet.</p>
-
-    <h2>What it is about</h2>
-    <p>Provisioning, updates, configuration, workloads, messaging and data collection for fleets
-      of embedded devices, from microcontrollers to gateways. weft integrates proven open tools
-      instead of rewriting them.</p>
-
-    <ul class="principles">
-      <li><strong>Every layer is swappable</strong> Each layer sits behind an open standard. Keep
-        your own broker, update tool or data pipeline and plug it in.</li>
-      <li><strong>Offline by design</strong> Everything works without cloud or internet. Updates
-        and configuration also travel as signed offline bundles.</li>
-      <li><strong>Decentralized</strong> Authority comes from signing keys, not from a server.
-        Devices verify what they receive and decide locally.</li>
-      <li><strong>Permissive and in Rust</strong> MIT licensed, memory-safe, with a small trusted
-        core that runs on Linux and microcontrollers.</li>
-    </ul>
-
-    <h2>Follow along</h2>
-    <p>Design documents and code live on <a href="https://github.com/theweft">GitHub</a>.
-      Questions and ideas: <a href="mailto:info@theweft.org">info@theweft.org</a>.</p>
+    <p class="tagline">Weaving existing open tools into one end-to-end platform for embedded device fleets: offline by design, every layer swappable.</p>
+    <p class="status">Early design. Nothing to install yet.</p>
+    <nav class="links" aria-label="Repositories">
+      <a class="primary" href="https://github.com/theweft">github.com/theweft</a>
+      <a href="https://github.com/theweft/weft-design">design</a>
+      <a href="https://github.com/theweft/weft-verifier">verifier</a>
+      <a href="https://github.com/theweft/weft-parts">parts</a>
+      <a href="https://github.com/theweft/weft-boardchecker">boardchecker</a>
+    </nav>
   </main>
   <footer>
-    <nav aria-label="Site">
-      <a href="/">Home</a>
-      <a href="https://github.com/theweft">GitHub</a>
-      <a href="/security/">Security</a>
-      <a href="mailto:info@theweft.org">info@theweft.org</a>
-    </nav>
-    <p>weft is open source under the MIT licence.</p>
+    <a href="/security/">Security</a>
+    <a href="mailto:info@theweft.org">info@theweft.org</a>
   </footer>
 </body>
 </html>
