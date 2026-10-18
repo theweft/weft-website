@@ -28,6 +28,19 @@ PALETTES = {
 LIGHT_BG, DARK_BG = "#f7f6f2", "#11151f"
 MUTED = "#4a5163"  # secondary text on the light background
 
+# Repository icons: the mark with a badge. Pictograms on a 24-unit grid, drawn as white strokes.
+PICTOGRAMS = {
+    "weft-design": '<path d="M7 7.5H17M7 12H17M7 16.5H13"/>',  # text lines: documents
+    "weft-verifier": '<path d="M6.5 12.5L10.5 16.5L17.5 8.5"/>',  # check mark
+    "weft-parts": '<rect x="7.5" y="7.5" width="9" height="9" rx="1"/><path d="M12 4.5V7.5M12 16.5V19.5M4.5 12H7.5M16.5 12H19.5"/>',  # chip
+    "weft-boardchecker": '<circle cx="10.5" cy="10.5" r="4.5"/><path d="M14 14L18.5 18.5"/>',  # magnifier: inspect
+    "weft-sim": '<path d="M9.5 7V17L17 12Z" fill="#fff"/>',  # play
+    "weft-website": '<rect x="5" y="6" width="14" height="12" rx="1.5"/><path d="M5 10H19"/>',  # browser window
+}
+# Badge: centre and radius on the 48-unit grid, plus the background ring that separates it.
+BADGE_C, BADGE_R, BADGE_RING = 36.5, 11, 1.5
+ICON_MARK_SCALE = 0.72
+
 # Repositories with a social preview card: name and the description shown on GitHub.
 REPOS = [
     ("weft-design", "Design documents: decisions, prior art, contracts and facts"),
@@ -131,6 +144,23 @@ def wrap(font, text, x_height, width):
     return lines + [line]
 
 
+def repo_icons():
+    p = PALETTES["light"]
+    (OUT / "repos").mkdir(exist_ok=True)
+    for name, picto in PICTOGRAMS.items():
+        s = BADGE_R * 2 / 24 * 0.82  # pictogram fills 82 % of the badge
+        o = BADGE_C - 12 * s
+        body = (
+            mark_group(p, 1, 1, ICON_MARK_SCALE)
+            + f'<circle cx="{BADGE_C:g}" cy="{BADGE_C:g}" r="{BADGE_R + BADGE_RING:g}" fill="{LIGHT_BG}"/>'
+            + f'<circle cx="{BADGE_C:g}" cy="{BADGE_C:g}" r="{BADGE_R:g}" fill="{p["warp"]}"/>'
+            + f'<g transform="translate({o:g} {o:g}) scale({s:g})" fill="none" stroke="#fff" stroke-width="2.6" '
+            + f'stroke-linecap="round" stroke-linejoin="round">{picto}</g>'
+        )
+        write(f"repos/{name}.svg", svg(SIZE, SIZE, body, bg=LIGHT_BG))
+        png(OUT / "repos" / f"{name}.svg", OUT / "repos" / f"{name}-512.png", 512)
+
+
 def social(bold, regular):
     W, H, M = 1280, 640, 96
     p = PALETTES["light"]
@@ -210,6 +240,9 @@ def main(font_path):
     )
     write("og-image.svg", og)
     png(OUT / "og-image.svg", OUT / "og-image.png", 1200)
+
+    # Repository icons: mark plus a badge with a pictogram; square, light background.
+    repo_icons()
 
     # Repository social previews (GitHub: 1280 x 640): mark, repository name, description.
     social(font, load_font(font_path, 400))
