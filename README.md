@@ -1,4 +1,4 @@
-# weft-website
+<h1><img src="https://theweft.org/brand/repos/weft-website.svg" alt="" width="44" height="44" align="absmiddle"> weft-website</h1>
 
 The [theweft.org](https://theweft.org) website: a static placeholder for now. Plain HTML and CSS in
 [public/](public/), no build step, no external resources, no tracking.
