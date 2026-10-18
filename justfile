@@ -29,7 +29,7 @@ brand:
 # The committed brand files and the logo in the pages must match the generator.
 brand-check: brand
     git diff --exit-code -- public/brand public/favicon.svg brand/mark-inline.html brand/lockup-inline.html
-    @for f in public/index.html public/security/index.html public/impressum/index.html public/404.html; do \
+    @for f in public/index.html public/security/index.html public/imprint/index.html public/404.html; do \
         grep -qF "$(cat brand/mark-inline.html)" "$f" || grep -qF "$(cat brand/lockup-inline.html)" "$f" || { echo "$f: logo differs from the generated inline logo"; exit 1; }; \
     done
 
