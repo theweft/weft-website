@@ -26,6 +26,17 @@ PALETTES = {
     "white": {"warp": "#ffffff", "weft": "#ffffff", "ink": "#ffffff"},  # one colour, reversed
 }
 LIGHT_BG, DARK_BG = "#f7f6f2", "#11151f"
+MUTED = "#4a5163"  # secondary text on the light background
+
+# Repositories with a social preview card: name and the description shown on GitHub.
+REPOS = [
+    ("weft-design", "Design documents: decisions, prior art, contracts and facts"),
+    ("weft-verifier", "Trusted core: verifies signed documents and delegations and decides desired state, offline and deterministically"),
+    ("weft-parts", "Chip data (pinouts, address straps, device tree facts) and behavioural chip models"),
+    ("weft-boardchecker", "Checks a PCB netlist (IPC-2581) against a Linux device tree overlay"),
+    ("weft-sim", "Board simulation: real Linux drivers in a small VM against weft-parts chip models"),
+    ("weft-website", "theweft.org: static site served by Cloudflare"),
+]
 
 # Mark geometry on a 48-unit grid: 2x2 plain weave, square ends, real gaps.
 SIZE, W, GAP, PITCH, LO, HI = 48, 6, 2.6, 16, 5, 43
@@ -66,9 +77,9 @@ def mark_group(p, dx=0.0, dy=0.0, scale=1.0):
     return f'<g transform="translate({dx:g} {dy:g}) scale({scale:g})">{body}</g>'
 
 
-def load_font(path):
+def load_font(path, weight=WORD_WEIGHT):
     font = TTFont(path)
-    return instancer.instantiateVariableFont(font, {"wght": WORD_WEIGHT, "opsz": 32}, inplace=False) if "fvar" in font else font
+    return instancer.instantiateVariableFont(font, {"wght": weight, "opsz": 32}, inplace=False) if "fvar" in font else font
 
 
 def word_outline(font, text):
@@ -97,6 +108,46 @@ def svg(width, height, body, bg=None):
 def word_group(word, p, x, baseline, scale):
     d, _, _ = word
     return f'<path fill="{p["ink"]}" transform="translate({x:g} {baseline:g}) scale({scale:g} {-scale:g})" d="{d}"/>'
+
+
+def text_path(font, text, x, baseline, x_height, fill):
+    """`text` as outlines with the given x-height; returns (svg path, width)."""
+    d, advance, xh = word_outline(font, text)
+    s = x_height / xh
+    path = f'<path fill="{fill}" transform="translate({x:g} {baseline:g}) scale({s:g} {-s:g})" d="{d}"/>'
+    return path, advance * s
+
+
+def wrap(font, text, x_height, width):
+    """Greedy line breaks so that no line is wider than `width`."""
+    lines, line = [], ""
+    for word in text.split():
+        candidate = f"{line} {word}".strip()
+        if line and text_path(font, candidate, 0, 0, x_height, "")[1] > width:
+            lines.append(line)
+            line = word
+        else:
+            line = candidate
+    return lines + [line]
+
+
+def social(bold, regular):
+    W, H, M = 1280, 640, 96
+    p = PALETTES["light"]
+    (OUT / "social").mkdir(exist_ok=True)
+    for name, description in REPOS:
+        body = mark_group(p, M - 5 * 2.5, M - 5 * 2.5, 2.5)  # 120 px mark, threads aligned to the margin
+        # Name: "weft-" in ink, the rest in warp; as large as fits, at most x-height 64.
+        prefix, rest = "weft-", name.removeprefix("weft-")
+        _, full = text_path(bold, name, 0, 0, 64, "")
+        xh = min(64, 64 * (W - 2 * M) / full)
+        baseline = 380
+        part, w = text_path(bold, prefix, M, baseline, xh, p["ink"])
+        body += part + text_path(bold, rest, M + w, baseline, xh, p["warp"])[0]
+        for i, line in enumerate(wrap(regular, description, 22, W - 2 * M)):
+            body += text_path(regular, line, M, baseline + 80 + i * 50, 22, MUTED)[0]
+        write(f"social/{name}.svg", svg(W, H, body, bg=LIGHT_BG))
+        png(OUT / "social" / f"{name}.svg", OUT / "social" / f"{name}.png", W)
 
 
 def write(name, text):
@@ -159,6 +210,9 @@ def main(font_path):
     )
     write("og-image.svg", og)
     png(OUT / "og-image.svg", OUT / "og-image.png", 1200)
+
+    # Repository social previews (GitHub: 1280 x 640): mark, repository name, description.
+    social(font, load_font(font_path, 400))
 
     # Favicon: follows the browser's colour scheme.
     light, dark = PALETTES["light"], PALETTES["dark"]
