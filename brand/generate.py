@@ -36,6 +36,7 @@ PICTOGRAMS = {
     "weft-boardchecker": '<circle cx="10.5" cy="10.5" r="4.5"/><path d="M14 14L18.5 18.5"/>',  # magnifier: inspect
     "weft-sim": '<path d="M9.5 7V17L17 12Z" fill="#fff"/>',  # play
     "weft-website": '<rect x="5" y="6" width="14" height="12" rx="1.5"/><path d="M5 10H19"/>',  # browser window
+    "weft-agent": '<path d="M6.5 9H17M14 6L17 9L14 12M17.5 15H7M10 12L7 15L10 18"/>',  # two arrows: exchange, sync
 }
 # Badge: centre and radius on the 48-unit grid, plus the background ring that separates it.
 BADGE_C, BADGE_R, BADGE_RING = 36.5, 11, 1.5
@@ -49,6 +50,7 @@ REPOS = [
     ("weft-boardchecker", "Checks a PCB netlist (IPC-2581) against a Linux device tree overlay"),
     ("weft-sim", "Board simulation: real Linux drivers in a small VM against weft-parts chip models"),
     ("weft-website", "theweft.org: static site served by Cloudflare"),
+    ("weft-agent", "Linux device and gateway agent: transport, decider and executor around weft-verifier"),
 ]
 
 # Mark geometry on a 48-unit grid: 2x2 plain weave, square ends, real gaps.
