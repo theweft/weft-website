@@ -37,6 +37,7 @@ PICTOGRAMS = {
     "weft-sim": '<path d="M9.5 7V17L17 12Z" fill="#fff"/>',  # play
     "weft-website": '<rect x="5" y="6" width="14" height="12" rx="1.5"/><path d="M5 10H19"/>',  # browser window
     "weft-agent": '<path d="M6.5 9H17M14 6L17 9L14 12M17.5 15H7M10 12L7 15L10 18"/>',  # two arrows: exchange, sync
+    "weft-cli": '<path d="M6.5 8L10.5 12L6.5 16M12.5 16.5H17.5"/>',  # terminal prompt
 }
 # Badge: centre and radius on the 48-unit grid, plus the background ring that separates it.
 BADGE_C, BADGE_R, BADGE_RING = 36.5, 11, 1.5
@@ -51,6 +52,7 @@ REPOS = [
     ("weft-sim", "Board simulation: real Linux drivers in a small VM against weft-parts chip models"),
     ("weft-website", "theweft.org: static site served by Cloudflare"),
     ("weft-agent", "Linux device and gateway agent: transport, decider and executor around weft-verifier"),
+    ("weft-cli", "Operator tool: keys, signed documents and dry runs for weft"),
 ]
 
 # Mark geometry on a 48-unit grid: 2x2 plain weave, square ends, real gaps.
